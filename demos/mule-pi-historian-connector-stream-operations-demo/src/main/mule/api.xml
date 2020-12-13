@@ -1,148 +1,199 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:pi-historian="http://www.mulesoft.org/schema/mule/pi-historian" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd  http://www.mulesoft.org/schema/mule/pi-historian http://www.mulesoft.org/schema/mule/pi-historian/current/mule-pi-historian.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:json="http://www.mulesoft.org/schema/mule/json"
+	xmlns:pi-historian="http://www.mulesoft.org/schema/mule/pi-historian"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd  http://www.mulesoft.org/schema/mule/pi-historian http://www.mulesoft.org/schema/mule/pi-historian/current/mule-pi-historian.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
-    <apikit:config name="api-config" api="api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-  
-    <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e6023724-c656-4a82-90a2-818caabc743d">
-        <http:listener-connection host="0.0.0.0" port="8081" />
-    </http:listener-config>
-    <pi-historian:config name="PI_Historian_Config" doc:name="PI Historian Config" doc:id="32506a96-b897-4df8-926b-f9a1e2134276" >
-		<pi-historian:pi-server-connection host="${pi.server.host}" port="${pi.server.port}" username="${pi.server.username}" password="${pi.server.password}">
-			<tls:context >
+	<apikit:config name="api-config" api="api.raml"
+		outboundHeadersMapName="outboundHeaders"
+		httpStatusVarName="httpStatus" />
+
+	<http:listener-config name="HTTP_Listener_config"
+		doc:name="HTTP Listener config"
+		doc:id="e6023724-c656-4a82-90a2-818caabc743d">
+		<http:listener-connection host="0.0.0.0"
+			port="8082" />
+	</http:listener-config>
+
+
+	<pi-historian:request-config
+		name="PI_Historian_Request_config"
+		doc:name="PI Historian Request config"
+		doc:id="227084ef-cc9e-40bf-b71c-b0aca6ec7208">
+		<pi-historian:pi-server-connection
+			host="${pi.server.host}" port="${pi.server.port}"
+			username="${pi.server.username}" password="${pi.server.password}">
+			<tls:context>
 				<tls:trust-store insecure="true" />
 			</tls:context>
 		</pi-historian:pi-server-connection>
-	</pi-historian:config>
+	</pi-historian:request-config>
 	<flow name="api-main">
-        <http:listener path="/api/*" config-ref="HTTP_Listener_config">
-            <http:response statusCode="#[vars.httpStatus default 200]">
-                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
-            </http:response>
-            <http:error-response statusCode="#[vars.httpStatus default 500]">
-                <http:body><![CDATA[#[payload]]]></http:body>
-                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
-            </http:error-response>
-        </http:listener>
-        <apikit:router config-ref="api-config" />
-        <error-handler>
-            <on-error-propagate type="APIKIT:BAD_REQUEST">
-                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-                    <ee:message>
-                        <ee:set-payload><![CDATA[%dw 2.0
+		<http:listener path="/api/*"
+			config-ref="HTTP_Listener_config">
+			<http:response
+				statusCode="#[vars.httpStatus default 200]">
+				<http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+			</http:response>
+			<http:error-response
+				statusCode="#[vars.httpStatus default 500]">
+				<http:body><![CDATA[#[payload]]]></http:body>
+				<http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+			</http:error-response>
+		</http:listener>
+		<apikit:router config-ref="api-config" />
+		<error-handler>
+			<on-error-propagate type="APIKIT:BAD_REQUEST">
+				<ee:transform
+					xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {message: "Bad request"}]]></ee:set-payload>
-                    </ee:message>
-                    <ee:variables>
-                        <ee:set-variable variableName="httpStatus">400</ee:set-variable>
-                    </ee:variables>
-                </ee:transform>
-            </on-error-propagate>
-            <on-error-propagate type="APIKIT:NOT_FOUND">
-                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-                    <ee:message>
-                        <ee:set-payload><![CDATA[%dw 2.0
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="httpStatus">400
+						</ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+			</on-error-propagate>
+			<on-error-propagate type="APIKIT:NOT_FOUND">
+				<ee:transform
+					xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {message: "Resource not found"}]]></ee:set-payload>
-                    </ee:message>
-                    <ee:variables>
-                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
-                    </ee:variables>
-                </ee:transform>
-            </on-error-propagate>
-            <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
-                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-                    <ee:message>
-                        <ee:set-payload><![CDATA[%dw 2.0
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="httpStatus">404
+						</ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+			</on-error-propagate>
+			<on-error-propagate
+				type="APIKIT:METHOD_NOT_ALLOWED">
+				<ee:transform
+					xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {message: "Method not allowed"}]]></ee:set-payload>
-                    </ee:message>
-                    <ee:variables>
-                        <ee:set-variable variableName="httpStatus">405</ee:set-variable>
-                    </ee:variables>
-                </ee:transform>
-            </on-error-propagate>
-            <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
-                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-                    <ee:message>
-                        <ee:set-payload><![CDATA[%dw 2.0
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="httpStatus">405
+						</ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+			</on-error-propagate>
+			<on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+				<ee:transform
+					xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {message: "Not acceptable"}]]></ee:set-payload>
-                    </ee:message>
-                    <ee:variables>
-                        <ee:set-variable variableName="httpStatus">406</ee:set-variable>
-                    </ee:variables>
-                </ee:transform>
-            </on-error-propagate>
-            <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
-                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-                    <ee:message>
-                        <ee:set-payload><![CDATA[%dw 2.0
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="httpStatus">406
+						</ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+			</on-error-propagate>
+			<on-error-propagate
+				type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+				<ee:transform
+					xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {message: "Unsupported media type"}]]></ee:set-payload>
-                    </ee:message>
-                    <ee:variables>
-                        <ee:set-variable variableName="httpStatus">415</ee:set-variable>
-                    </ee:variables>
-                </ee:transform>
-            </on-error-propagate>
-            <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
-                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-                    <ee:message>
-                        <ee:set-payload><![CDATA[%dw 2.0
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="httpStatus">415
+						</ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+			</on-error-propagate>
+			<on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+				<ee:transform
+					xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {message: "Not Implemented"}]]></ee:set-payload>
-                    </ee:message>
-                    <ee:variables>
-                        <ee:set-variable variableName="httpStatus">501</ee:set-variable>
-                    </ee:variables>
-                </ee:transform>
-            </on-error-propagate>
-        </error-handler>
-    </flow>
-    <flow name="api-console">
-        <http:listener path="/console/*" config-ref="HTTP_Listener_config">
-            <http:response statusCode="#[vars.httpStatus default 200]">
-                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
-            </http:response>
-            <http:error-response statusCode="#[vars.httpStatus default 500]">
-                <http:body><![CDATA[#[payload]]]></http:body>
-                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
-            </http:error-response>
-        </http:listener>
-        <apikit:console config-ref="api-config" />
-        <error-handler>
-            <on-error-propagate type="APIKIT:NOT_FOUND">
-                <ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-                    <ee:message>
-                        <ee:set-payload><![CDATA[%dw 2.0
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="httpStatus">501
+						</ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+	<flow name="api-console">
+		<http:listener path="/console/*"
+			config-ref="HTTP_Listener_config">
+			<http:response
+				statusCode="#[vars.httpStatus default 200]">
+				<http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+			</http:response>
+			<http:error-response
+				statusCode="#[vars.httpStatus default 500]">
+				<http:body><![CDATA[#[payload]]]></http:body>
+				<http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+			</http:error-response>
+		</http:listener>
+		<apikit:console config-ref="api-config" />
+		<error-handler>
+			<on-error-propagate type="APIKIT:NOT_FOUND">
+				<ee:transform
+					xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {message: "Resource not found"}]]></ee:set-payload>
-                    </ee:message>
-                    <ee:variables>
-                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
-                    </ee:variables>
-                </ee:transform>
-            </on-error-propagate>
-        </error-handler>
-    </flow>
-    <flow name="get:\stream\end:api-config">
-        <logger level="INFO" message="get:\stream\end:api-config" />
-        <set-payload value="#[%dw 2.0 output application/json --- {  webId: attributes.queryParams.webId }]" doc:name="Set Payload" doc:id="0af88c26-9c40-4bc2-8947-1c61339cf6e5" />
-        <pi-historian:get-end-value-stream-by-web-id doc:name="Get End of Stream by WebId" doc:id="e006629a-bf75-4e8a-a693-fe6fef875c5a" config-ref="PI_Historian_Config" />
-        <set-payload value="#[payload]" doc:name="Set Payload" doc:id="7e013530-0fdf-4424-bddc-0600b347f743" />
-    </flow>
-    <flow name="get:\stream\value:api-config">
-        <logger level="INFO" message="get:\stream\value:api-config" />
-        <ee:transform doc:name="Transform Message" doc:id="076abdf9-2283-4dfe-a380-f837156632b6" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="httpStatus">404
+						</ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+	<flow name="get:\stream\end:api-config">
+		<logger level="INFO" message="get:\stream\end:api-config" />
+		<set-payload
+			value="#[%dw 2.0 output application/json --- {  webId: attributes.queryParams.webId }]"
+			doc:name="Set Payload" doc:id="0af88c26-9c40-4bc2-8947-1c61339cf6e5" />
+		<pi-historian:get-end-value-stream-by-web-id
+			doc:name="Get End of Stream by WebId"
+			doc:id="e006629a-bf75-4e8a-a693-fe6fef875c5a"
+			config-ref="PI_Historian_Request_config" />
+		<set-payload value="#[payload]" doc:name="Set Payload"
+			doc:id="7e013530-0fdf-4424-bddc-0600b347f743" />
+	</flow>
+	<flow name="get:\stream\value:api-config">
+		<logger level="INFO" message="get:\stream\value:api-config" />
+		<ee:transform doc:name="Transform Message"
+			doc:id="076abdf9-2283-4dfe-a380-f837156632b6">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
@@ -150,14 +201,20 @@ output application/json
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-        <pi-historian:get-value-stream-by-web-id doc:name="Get Value Stream by WebId" doc:id="ad89cd18-66cc-473e-b851-3db4ff84cf28" config-ref="PI_Historian_Config" />
-        <set-payload value="#[payload]" doc:name="Set Payload" doc:id="f3fe1d4b-7eaf-4bd8-866d-54f857ed3008" />
-    </flow>
-    <flow name="post:\stream\value:application\json:api-config">
-        <logger level="INFO" message="post:\stream\value:application\json:api-config" />
-        <ee:transform doc:name="Transform Message" doc:id="d45c4ec6-c741-47b2-83e3-aabe7949e497" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
+		<pi-historian:get-value-stream-by-web-id
+			doc:name="Get Value Stream by WebId"
+			doc:id="ad89cd18-66cc-473e-b851-3db4ff84cf28"
+			config-ref="PI_Historian_Request_config" />
+		<set-payload value="#[payload]" doc:name="Set Payload"
+			doc:id="f3fe1d4b-7eaf-4bd8-866d-54f857ed3008" />
+	</flow>
+	<flow name="post:\stream\value:application\json:api-config">
+		<logger level="INFO"
+			message="post:\stream\value:application\json:api-config" />
+		<ee:transform doc:name="Transform Message"
+			doc:id="d45c4ec6-c741-47b2-83e3-aabe7949e497">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
@@ -168,14 +225,20 @@ output application/json
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<pi-historian:update-stream-value doc:name="Update Stream Value" doc:id="3b2aa471-b384-4fe1-84ac-dc42a4a4f734" config-ref="PI_Historian_Config" />
-        <set-payload value="#[payload.status]" doc:name="Set Payload" doc:id="2b75d700-1486-45ae-8b88-3dcf9a5d0f25" />
-    </flow>
-    <flow name="post:\stream\values:application\json:api-config">
-        <logger level="INFO" message="post:\stream\values:application\json:api-config" />
-        <ee:transform doc:name="Transform Message" doc:id="cf4c786e-f014-4700-85f7-d0cf66f27565" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
+		<pi-historian:update-stream-value
+			doc:name="Update Stream Value"
+			doc:id="3b2aa471-b384-4fe1-84ac-dc42a4a4f734"
+			config-ref="PI_Historian_Request_config" />
+		<set-payload value="#[payload]"
+			doc:name="Set Payload" doc:id="2b75d700-1486-45ae-8b88-3dcf9a5d0f25" />
+	</flow>
+	<flow name="post:\stream\values:application\json:api-config">
+		<logger level="INFO"
+			message="post:\stream\values:application\json:api-config" />
+		<ee:transform doc:name="Transform Message"
+			doc:id="cf4c786e-f014-4700-85f7-d0cf66f27565">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
@@ -186,52 +249,71 @@ output application/json
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-        <pi-historian:update-stream-values doc:name="Update Stream Values in Bulk" doc:id="a8a3da3a-0824-4ceb-98f8-be5484ef2905" config-ref="PI_Historian_Config" />
-        <set-payload value="#[payload.status]" doc:name="Set Payload" doc:id="84fe1a74-bf48-4c94-986f-879c79637fac" />
-    </flow>
-    <flow name="get:\stream\plot:api-config">
-        <logger level="INFO" message="get:\stream\plot:api-config" />
-        <ee:transform doc:name="Transform Message" doc:id="b5fa75d8-0b38-416d-badf-729a69081fd2">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
+		<pi-historian:update-stream-values
+			doc:name="Update Stream Values in Bulk"
+			doc:id="a8a3da3a-0824-4ceb-98f8-be5484ef2905"
+			config-ref="PI_Historian_Request_config" />
+		<set-payload value="#[payload.status]"
+			doc:name="Set Payload" doc:id="84fe1a74-bf48-4c94-986f-879c79637fac" />
+	</flow>
+	<flow name="get:\stream\plot:api-config">
+		<logger level="INFO" message="get:\stream\plot:api-config" />
+		<ee:transform doc:name="Transform Message"
+			doc:id="b5fa75d8-0b38-416d-badf-729a69081fd2">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
 	webId: attributes.queryParams.webId
 }]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-        <pi-historian:get-plot-stream-by-web-id doc:name="Get Plot Stream by WebId" doc:id="5ef25a2a-ddd7-4c74-9171-e13732d303ad" config-ref="PI_Historian_Config" />
-        <set-payload value="#[payload]" doc:name="Set Payload" doc:id="712e4991-efc7-45f9-8fa9-c70a60288d55" />
-    </flow>
-    <flow name="get:\stream\recorded:api-config">
-        <logger level="INFO" message="get:\stream\recorded:api-config" />
-        <ee:transform doc:name="Transform Message" doc:id="81e58ce0-40bc-413e-8684-c767353fc6a3">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
+			</ee:message>
+		</ee:transform>
+		<pi-historian:get-plot-stream-by-web-id
+			doc:name="Get Plot Stream by WebId"
+			doc:id="5ef25a2a-ddd7-4c74-9171-e13732d303ad"
+			config-ref="PI_Historian_Request_config" />
+		<set-payload value="#[payload]" doc:name="Set Payload"
+			doc:id="712e4991-efc7-45f9-8fa9-c70a60288d55" />
+	</flow>
+	<flow name="get:\stream\recorded:api-config">
+		<logger level="INFO" message="get:\stream\recorded:api-config" />
+		<ee:transform doc:name="Transform Message"
+			doc:id="81e58ce0-40bc-413e-8684-c767353fc6a3">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
 	webId: attributes.queryParams.webId
 }]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-        <pi-historian:get-recorded-stream-by-web-id doc:name="Get Recorded Stream by WebId" doc:id="bb1ed35c-4ffb-4636-9d6e-6f9767972329" config-ref="PI_Historian_Config" />
-        <set-payload value="#[payload]" doc:name="Set Payload" doc:id="010ed1cb-bd3a-40b5-97de-9d7fa6701e46" />
-    </flow>
-    <flow name="get:\stream\summary:api-config">
-        <logger level="INFO" message="get:\stream\summary:api-config" />
-        <ee:transform doc:name="Transform Message" doc:id="f26268df-25c3-4a71-96f9-3204501af8e8">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
+			</ee:message>
+		</ee:transform>
+		<pi-historian:get-recorded-stream-by-web-id
+			doc:name="Get Recorded Stream by WebId"
+			doc:id="bb1ed35c-4ffb-4636-9d6e-6f9767972329"
+			config-ref="PI_Historian_Request_config" />
+		<set-payload value="#[payload]" doc:name="Set Payload"
+			doc:id="010ed1cb-bd3a-40b5-97de-9d7fa6701e46" />
+	</flow>
+	<flow name="get:\stream\summary:api-config">
+		<logger level="INFO" message="get:\stream\summary:api-config" />
+		<ee:transform doc:name="Transform Message"
+			doc:id="f26268df-25c3-4a71-96f9-3204501af8e8">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
 output application/json
 ---
 {
 	webId: attributes.queryParams.webId
 }]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
-        <pi-historian:get-stream-summary-by-web-id doc:name="Get Stream Summary by WebId" doc:id="caaada16-d7b8-44c6-8c37-4b7f292066c6" config-ref="PI_Historian_Config" />
-        <set-payload value="#[payload]" doc:name="Set Payload" doc:id="970e1f92-4955-4f3a-ad70-3cf349b28395" />
-    </flow>
+			</ee:message>
+		</ee:transform>
+		<pi-historian:get-stream-summary-by-web-id
+			doc:name="Get Stream Summary by WebId"
+			doc:id="caaada16-d7b8-44c6-8c37-4b7f292066c6"
+			config-ref="PI_Historian_Request_config" />
+		<set-payload value="#[payload]" doc:name="Set Payload"
+			doc:id="970e1f92-4955-4f3a-ad70-3cf349b28395" />
+	</flow>
 </mule>

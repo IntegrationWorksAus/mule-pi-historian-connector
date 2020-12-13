@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<global-property doc:name="Global Property"
+		doc:id="9923e8a6-46d7-40b0-bb17-aa10334adc4f"
+		name="asset.database.web.id"
+		value="F1RDnm49mw1pCEag4pKc32QHJQp-sJACTfYU6xAKhnl0b4xAT1NJUElTRVJWRVJcVEVTVERBVEFCQVNF" />
+	<configuration-properties
+		file="server-config.properties" />
+
+</mule>

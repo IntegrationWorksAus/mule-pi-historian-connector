@@ -1,0 +1,62 @@
+#%RAML 1.0
+title: Pi Historian Connector APIs
+
+/stream:
+  /value:
+    get:
+      queryParameters:
+        webId:
+          type: string
+    post:
+      body:
+        application/json:
+          example:
+            {
+
+              "UnitsAbbreviation": "",
+              "Good": true,
+              "Questionable": false,
+              "Value": 1332.3
+              }
+  /values:
+    post:
+      body:
+        application/json:
+          example:
+            [{
+
+  "UnitsAbbreviation": "",
+  "Good": true,
+  "Questionable": false,
+  "Value": 3332.3
+},
+{
+
+  "UnitsAbbreviation": "",
+  "Good": true,
+  "Questionable": false,
+  "Value": 13212.3
+}
+]
+  /end:
+    get:
+      queryParameters:
+        webId:
+          type: string
+    
+  /recorded:
+    get:
+      queryParameters:
+        webId:
+          type: string
+  /plot:
+    get:
+      queryParameters:
+        webId:
+          type: string
+    
+  /summary:
+    get:
+      queryParameters:
+        webId:
+          type: string
