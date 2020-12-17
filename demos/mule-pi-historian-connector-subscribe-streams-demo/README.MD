@@ -18,7 +18,7 @@ In order to build and run this project, you'll need;
 * Java 8
 * Anypoint Studio 7.x
 * Mule Runtime 4.1.x or higher
-* PI Web API 2016 with Basic Auth enabled +
+* PI Web API 2016 or higher with Basic Auth enabled
 
 
 ## Import the project
