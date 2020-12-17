@@ -2,10 +2,6 @@
 <mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:pi-historian="http://www.mulesoft.org/schema/mule/pi-historian" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd  http://www.mulesoft.org/schema/mule/pi-historian http://www.mulesoft.org/schema/mule/pi-historian/current/mule-pi-historian.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
     <apikit:config name="api-config" api="api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-  
-    <http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e6023724-c656-4a82-90a2-818caabc743d">
-        <http:listener-connection host="0.0.0.0" port="8081" />
-    </http:listener-config>
     <pi-historian:listener-config name="PI_Historian_Config" doc:name="PI Historian Config" doc:id="32506a96-b897-4df8-926b-f9a1e2134276" >
 		<pi-historian:pi-server-web-socket-connection host="${pi.server.host}" port="${pi.server.port}" username="${pi.server.username}" password="${pi.server.password}" >
 			<reconnection >
