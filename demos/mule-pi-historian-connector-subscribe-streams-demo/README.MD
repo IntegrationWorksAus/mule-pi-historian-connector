@@ -6,15 +6,11 @@ Anypoint Pi Historian Connector Demo
 ------------
 
 
-* The present demo provides an application that contains sample flows which invoke the following operations related to the streams.
+This demo provides an application that contains sample flow which subscribes to a stream channel in PI Historian server.
 
-   * Get Stream value by WebId
-   * Get Stream Summary by WebId
-   * Get Recorded Stream by WebId
-   * Get Plot Strean by WebId
-   * Update Stream Value
-   * Update Bulk Stream Values
-   * Get End of Stream by WebId
+## Operations
+
+   * Subscribe to stream channel.
 
 
 ## Prerequisites
@@ -43,34 +39,24 @@ In order to build and run this project, you'll need;
    ```
    
 * Open the **Global Element Configuration**.
+
    ![Global Element](images/pi-historian-config.JPG)
    
 * Click the **Test Connection** button to ensure there is connectivity with the sandbox. A successful message should pop-up.
 
 ## Run the demo
 
-* Go to **Run > Run As > Mule Application**. 
-* Open a browser and access the URL **http://localhost:8081/console/**. You should see the api console with all the endpoints.
+* Go to **Run > Run As > Mule Application**. .
 
-![Console](images/console.JPG)
+* Once the application is started, check the console to see the subscription message.
 
-## example-get-streams-value :
+![Successful connection Log](images/subscription-successful.JPG)
 
-* Select the /stream/value **GET** endpoint.
-* In the **webId** query parameter field, add the webId of a PI Point for which you want to retrieve the value.
-* Hit send button.
+* The application will automatically log the updated values received over the stream channel.
 
-![getStreamValues](images/stream-values.JPG)
+![Message received Log](images/message-received.JPG)
 
-## example-update-streams-value :
 
-* Select the /stream/value **PUT** endpoint.
-* Add **webId** query parameter , add the webId of a PI Point for which you want to update the value.
-* Keep the body json as is or update it if you want.
-* Hit send button.
-
-![updateStreamvalues](images/update-stream-values.JPG)
-  
 
 ## See more
 * For additional technical information on the PiHistorian Connector, visit our [technical reference documentation](TBA).
