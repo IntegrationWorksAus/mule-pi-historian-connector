@@ -8,6 +8,14 @@ Anypoint Pi Historian Connector Demo
 
 * The present demo provides an application that contains sample flows which invoke the following operations related to the streams.
 
+   * Get Stream value by WebId
+   * Get Stream Summary by WebId
+   * Get Recorded Stream by WebId
+   * Get Plot Strean by WebId
+   * Update Stream Value
+   * Update Bulk Stream Values
+   * Get End of Stream by WebId
+
 
 ## Prerequisites
 In order to build and run this project, you'll need;
