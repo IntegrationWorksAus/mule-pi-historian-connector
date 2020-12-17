@@ -43,7 +43,7 @@ In order to build and run this project, you'll need;
 
 * Go to **Run > Run As > Mule Application**. 
 * Open a browser and access the URL **http://localhost:8081/console/**. You should see the api console with all the endpoints.
-![Console](images/console.jpeg)
+![Console](images/console.JPG)
 
 ## example-streams-value :
 
@@ -51,7 +51,7 @@ In order to build and run this project, you'll need;
 * In the **webId** query parameter field, add the webId of a PI Point for which you want to retrieve the value.
 * Hit send button.
 
-![StreamValues](images/stream-values.jpeg)
+![GetStreamValues](images/stream-values.JPG)
 
 ## example-get-streams-value :
 
@@ -59,7 +59,7 @@ In order to build and run this project, you'll need;
 * In the **webId** query parameter field, add the webId of a PI Point for which you want to retrieve the value.
 * Hit send button.
 
-![StreamValues](images/stream-values.jpeg)
+![UpdateStreamValues](/images/stream-values.JPG)
 
 ## example-update-streams-value :
 
@@ -68,7 +68,7 @@ In order to build and run this project, you'll need;
 * Keep the body json as is or update it if you want.
 * Hit send button.
 
-![StreamValues](images/update-stream-values.jpeg)
+![StreamValues](images/update-stream-values.JPG)
   
 
 ## See more
