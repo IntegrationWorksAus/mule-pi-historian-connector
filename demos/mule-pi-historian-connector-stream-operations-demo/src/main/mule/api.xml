@@ -18,7 +18,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		doc:name="HTTP Listener config"
 		doc:id="e6023724-c656-4a82-90a2-818caabc743d">
 		<http:listener-connection host="0.0.0.0"
-			port="8082" />
+			port="${http.port}" />
 	</http:listener-config>
 
 
@@ -208,7 +208,7 @@ output application/json
 		<set-payload value="#[payload]" doc:name="Set Payload"
 			doc:id="f3fe1d4b-7eaf-4bd8-866d-54f857ed3008" />
 	</flow>
-	<flow name="post:\stream\value:application\json:api-config">
+	<flow name="put:\stream\value:application\json:api-config">
 		<logger level="INFO"
 			message="post:\stream\value:application\json:api-config" />
 		<ee:transform doc:name="Transform Message"
@@ -232,7 +232,7 @@ output application/json
 		<set-payload value="#[payload]"
 			doc:name="Set Payload" doc:id="2b75d700-1486-45ae-8b88-3dcf9a5d0f25" />
 	</flow>
-	<flow name="post:\stream\values:application\json:api-config">
+	<flow name="put:\stream\values:application\json:api-config">
 		<logger level="INFO"
 			message="post:\stream\values:application\json:api-config" />
 		<ee:transform doc:name="Transform Message"
