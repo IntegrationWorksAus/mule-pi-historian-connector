@@ -28,7 +28,7 @@
         <AsyncLogger name="org.mule.runtime.core.internal.processor.LoggerMessageProcessor" level="INFO"/>
   <AsyncLogger
 			name="org.mule.extension.pi.historian.internal"
-			level="DEBUG" />
+			level="INFO" />
         <AsyncRoot level="INFO">
             <AppenderRef ref="file" />
         </AsyncRoot>

@@ -55,9 +55,15 @@
             <classifier>mule-plugin</classifier>
         </dependency>
     	<dependency>
-            <groupId>works.integration</groupId>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-json-module</artifactId>
+            <version>2.1.3</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+    	<dependency>
+            <groupId>70595c4b-73d2-4e77-927f-fc6d32675a45</groupId>
             <artifactId>mule-pi-historian-connector</artifactId>
-            <version>2.0.29</version>
+            <version>1.4.3</version>
             <classifier>mule-plugin</classifier>
         </dependency>
     </dependencies>
