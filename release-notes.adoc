@@ -1,0 +1,71 @@
+= PI Historian Connector Release Notes
+:keywords: pihistorian, osisoft, piwebapi, mulesoft, integrationWorks
+
+The Anypoint PI Historian connector provides the capability to connect a Mule app with OSISoft PI Historian Server. The MuleSoft support category for PI Historian connector is link:https://www.mulesoft.com/legal/versioning-back-support-policy#anypoint-connectors[MuleSoft Certified].
+
+link:/<System_Name>-connector[Pi Historian Connector User Guide]
+
+== 1.0.0 - 18/01/2020
+=== Version 1.0.0 Compatibility
+
+PiHistorian connector is available on Mule 4.1.X or later.
+
+[%header%autowidth]
+|===
+|Application/Service |Version
+|Mule Runtime	     |  4.1.x
+|OSISoft PI Web API|  PI Web API 2016 or later.
+|Java	             |  1.8 and later
+|Anypoint Studio	             |  7.x
+|===
+
+
+==== Key Features
+
+The GoogleAnalytics connector supports the following capabilities:
+
+* Basic Authentication
+* Pi Historian Connector provides outbound and inbound operations to work with Streams, Points, Assets and Elements in the OsiSoft Pi Historian system. The version 1.0.0 contains the following operations-
+
+===== AssetDatabase
+
+- Create elements in the Asset database.
+
+===== AssetServer
+
+- List Asset Servers
+  		
+- Get Asset Server by WebId
+
+===== Element
+
+- Create an Element.
+	
+- Update an Element.
+	
+- Delete an Element.
+
+===== Streams
+
+- Get Recorded Stream for a Pi Point.
+- Get Plot Stream for a Pi Point.
+- Get Value Stream for a Pi Point.
+- Get Stream End Value for a Pi Point.
+- Get Stream Summary for a Pi Point.
+- Update Stream Value for a Pi Point.
+- Update Stream Values in bulk for a Pi Point.
+  
+===== Subscribe Stream Channel (inbound)
+
+ - Subscribe a stream channel
+
+=== 1.0.0 Known Issues
+
+N/A
+
+=== Support Resources
+
+* Contact IntegrationWorks Australia at mailto:osipiconnector@integration.works[,PI Historian Connector].
+* Learn how to link:https://docs.mulesoft.com/studio/7.7/add-modules-in-studio-to [Install Anypoint Connectors] using Anypoint Exchange.
+* Access the link:https://help.mulesoft.com/s/topic/0TO2T0000009a3bWAA/detail[MuleSoft Forum] to post questions and get help from Mule’s broad community of users.
+* To access MuleSoft’s expert support team, link:http://www.mulesoft.com/mule-esb-subscription[subscribe] and log in to MuleSoft’s link:http://www.mulesoft.com/support-login[Customer Portal].
