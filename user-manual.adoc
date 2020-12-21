@@ -173,10 +173,13 @@ This use case demonstrate the way to interact with Streams in the PI Historian s
       - Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
       - Follow the steps described in the demo and run the application.
       - test the application -
+      
 ===== Request
+
 ----
 			GET http://localhost:8081/api/stream/end?webId=<webIdValue>
 ----
+
 ===== Response
 
 ----     
@@ -196,10 +199,14 @@ This use case demonstrate the way to interact with Streams in the PI Historian s
       - Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
       - Follow the steps described in the demo and run the application.
       - test the application -
+
+
 ===== Request
+
 ----
 			GET http://localhost:8081/api/stream/value?webId=<webIdValue>
 ----
+
 ===== Response
 
 ----     
@@ -214,12 +221,15 @@ This use case demonstrate the way to interact with Streams in the PI Historian s
 		}'
 ----
 
+
 ==== Update Stream Value
 
       - Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
       - Follow the steps described in the demo and run the application.
       - test the application -
+
 ===== Request
+
 ----
 			PUT http://localhost:8081/api/stream/value?webId=<webIdValue>
 			
@@ -232,6 +242,7 @@ This use case demonstrate the way to interact with Streams in the PI Historian s
 			  "Value": 1332.3
 			}
 ----
+
 ===== Response
 
 ----     
