@@ -1,9 +1,5 @@
-////
-The following is the approved connector user guide template for documenting MuleSoft Supported Connectors.
-////
-
-= Connector Name
-:keywords: add_keywords_separated_by_commas
+= PI Historian Connector
+:keywords: Pi Historian, OSISoft, OSI PI Historian, Mule Connector, Integration Works
 :imagesdir: ./_images
 :toc: macro
 :toclevels: 2
@@ -20,31 +16,32 @@ toc::[]
 [[overview]]
 == Overview
 
-First sentence introduces the connector and describes its basic function.
+The Anypoint Connector for PI Historian (PI Historian Connector) enables you to connect Mule flows to the PI system using the PI Web API.
+
 //Global rule: the word "connector" should be lower case except when appearing in titles, important URL anchors, and after a MuleSoft tradename such as "Anypoint".
 
-Read through this user guide to understand how to set up and configure a basic flow using the connector. Track feature additions, compatibility, limitations and API version updates with each release of the connector using the link:/release-notes/xyz-connector-release-notes[Connector Release Notes]. Review the connector operations and functionality using the link:/link-to-github.io-or-internal-section[Technical Reference] alongside the link:https://www.mulesoft.com/exchange#!/?filters=Salesforce&sortBy=rank[demo applications].
+Read through this user guide to understand how to set up and configure a basic flow using the Pi Historian connector. Track feature additions, compatibility, limitations and API version updates with each release of the connector using the link:https://github.com/deepakIW/mule-pi-historian-connector/blob/main/release-notes.adoc[Release Notes]. Review the connector operations and functionality using the link:/link-to-github.io-or-internal-section[Technical Reference] alongside the link:https://www.mulesoft.com/exchange#!/?filters=Salesforce&sortBy=rank[demo applications].
 
-MuleSoft maintains this connector under the link:/mule-user-guide/v/3.8/anypoint-connectors#connector-categories[_Insert Category_] support policy.
+MuleSoft maintains this connector under the link:https://www.mulesoft.com/legal/versioning-back-support-policy#anypoint-connectors[MuleSoft Certified] support policy.
 
 [[important-concepts]]
 == Important Concepts
 
 This document assumes that you are familiar with Mule,
-link:/mule-user-guide/v/3.8/anypoint-connectors[Anypoint Connectors], and
-link:/anypoint-studio/v/6[Anypoint Studio]. To increase your familiarity with Studio, consider completing a link:/anypoint-studio/v/6/basic-studio-tutorial[Anypoint Studio Tutorial]. This page requires some basic knowledge of link:/mule-user-guide/v/3.8/mule-concepts[Mule Concepts], link:/mule-user-guide/v/3.8/elements-in-a-mule-flow[Elements in a Mule Flow], and link:/mule-user-guide/v/3.8/global-elements[Global Elements].
+link:https://docs.mulesoft.com/connectors/introduction/introduction-to-anypoint-connectors[Anypoint Connectors], and
+link:https://docs.mulesoft.com/mule-runtime/4.3/intro-studio[Anypoint Studio 7]. To increase your familiarity with Studio, consider completing a link:https://docs.mulesoft.com/studio/7.3/[Anypoint Studio Tutorial]. This page requires some basic knowledge of link:https://docs.mulesoft.com/general/api-led-overview[Mule Concepts], link:https://docs.mulesoft.com/mule-runtime/4.2/about-components#components[Elements in a Mule Flow], and link:https://docs.mulesoft.com/mule-runtime/4.2/global-elements[Global Elements].
 
 
 [[requirements]]
 == Hardware and Software Requirements
 
-For hardware and software requirements, please visit the link:/release-notes/connector[Connector Release Notes].
+For hardware and software requirements, please visit the link:https://github.com/deepakIW/mule-pi-historian-connector/blob/main/release-notes.adoc[Release Notes].
 
 [[install]]
 == How to Install
 
 You can install the connector in Anypoint Studio using the instructions in
-link:/getting-started/anypoint-exchange#installing-a-connector-from-anypoint-exchange[Installing a Connector from Anypoint Exchange].
+link:https://docs.mulesoft.com/mule-runtime/3.9/installing-connectors[Installing a Connector from Anypoint Exchange].
 
 [[upgrading]]
 === Upgrading from an Older Version
@@ -63,8 +60,8 @@ Additionally, we recommend that you keep Studio up to date with its latest versi
 
 When designing your application in Studio, the act of dragging the connector from the palette onto the Anypoint Studio canvas should automatically populate the XML code with the connector *namespace* and *schema location*.
 
-*Namespace:* `+http://www.mulesoft.org/schema/mule/connector+`
-*Schema Location:* `+http://www.mulesoft.org/schema/mule/connector/current/mule-connector.xsd+`
+*Namespace:* `+http://www.mulesoft.org/schema/mule/pi-historian+`
+*Schema Location:* `+http://www.mulesoft.org/schema/mule/pi-historian/current/mule-pi-historian.xsd+`
 
 [TIP]
 If you are manually coding the Mule application in Studio's XML editor or other text editor, define the namespace and schema location in the header of your *Configuration XML*, inside the `<mule>` tag.
@@ -73,12 +70,12 @@ If you are manually coding the Mule application in Studio's XML editor or other 
 ----
 <mule xmlns="http://www.mulesoft.org/schema/mule/core"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:connector="http://www.mulesoft.org/schema/mule/connector"
+	xmlns:pi-historian="http://www.mulesoft.org/schema/mule/pi-historian"
       xsi:schemaLocation="
                http://www.mulesoft.org/schema/mule/core
                http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-               http://www.mulesoft.org/schema/mule/connector
-               http://www.mulesoft.org/schema/mule/connector/current/mule-connector.xsd">
+               http://www.mulesoft.org/schema/mule/pi-historian 
+               http://www.mulesoft.org/schema/mule/pi-historian/current/mule-pi-historian.xsd">
 
       <!-- put your global configuration elements and flows here -->
 
@@ -92,18 +89,19 @@ For Maven dependency management, include this XML snippet in your `pom.xml` file
 
 [source,xml,linenums]
 ----
-<dependency>
-  <groupId></groupId>
-  <artifactId></artifactId>
-  <version></version>
-</dependency>
+     <dependency>
+      <groupId>org.mule.modules</groupId>
+      <artifactId>mule-pi-historian-connector</artifactId>
+      <version>${version}</version>
+      <classifier>mule-plugin</classifier>
+     </dependency>
 ----
 
 [TIP]
 ====
 Inside the `<version>` tags, put the desired version number, the word `RELEASE` for the latest release, or `SNAPSHOT` for the latest available version. The available versions to date are:
 
-* *x.y.z*
+* *1.0.0*
 ====
 
 [[configure]]
@@ -111,31 +109,73 @@ Inside the `<version>` tags, put the desired version number, the word `RELEASE` 
 
 Place the connector into your flow as applicable for your use case.
 
-To use the <connector> connector in your Mule application, you must configure a global <connector> element that can be used by the <connector> connector (read more about  link:/mule-user-guide/v/3.8/global-elements[Global Elements]). The <connector> connector offers the following global configuration(s), requiring the following credentials: *Username*, *Password*...
+To use the Pi Historian connector in your Mule application, you must configure a global Pi Historian element that can be used by the Pi Historian connector (read more about  link:link:https://docs.mulesoft.com/mule-runtime/4.2/global-elements[Global Elements]). The Pi Historian connector offers the following global configuration(s), requiring the following credentials: *Hostname*, *Port*, *Username*, *Password*...etc.
 
 [%header,cols="50a,50a"]
 |===
 |Field |Description
-|*Username* |Enter the username to log into <>.
+|*Hostname* |Enter the host to connect with Pi Server.
+|*Port* |Enter the host to connect with Pi Server.
+|*Username* |Enter the username to log into Pi Server.
 |*Password* |Enter the corresponding password.
 
 |===
 
-//image:<connector>-global-element-props.png[<connector>-config]
+image:pi-historian-global-element-props.png[pi-historian-config]
 
 [[operations]]
+
 == Operations
 
-Outbound, inbound, streaming outbound  +
+===== AssetDatabase
 
-[NOTE]
-See a full list of operations for any version of the connector link:[here].
+- Create elements in the Asset database.
+
+===== AssetServer
+
+- List Asset Servers
+  		
+- Get Asset Server by WebId
+
+===== Element
+
+- Create an Element.
+	
+- Update an Element.
+	
+- Delete an Element.
+
+===== Streams
+
+- Get Recorded Stream for a Pi Point.
+- Get Plot Stream for a Pi Point.
+- Get Value Stream for a Pi Point.
+- Get Stream End Value for a Pi Point.
+- Get Stream Summary for a Pi Point.
+- Update Stream Value for a Pi Point.
+- Update Stream Values in bulk for a Pi Point.
+  
+===== Subscribe Stream Channel (inbound)
+
+ - Subscribe a stream channel
 
 
 == Common Use Cases
 
 Explain the common and less intuitive use cases and provide links to them in the bullets.
-//These may include an example app that can be deployed in Mule or links to Exchange
+
+===Usecase 1: Work with PI Streams
+
+This use case demonstrate the way to interact with Streams in the PI Historian server. 
+
+==== Get Stream Value
+* Get Stream Summary
+      * Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
+      * Follow the steps described in the demo and run the application.
+      * 
+
+
+
 
 * link:#use-case-1[Configure Connector to ...]
 * link:#use-case-2[Configure Authentication via ...]
