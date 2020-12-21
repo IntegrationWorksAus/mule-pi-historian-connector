@@ -164,36 +164,92 @@ image:pi-historian-global-element-props.png[pi-historian-config]
 
 Explain the common and less intuitive use cases and provide links to them in the bullets.
 
-===Usecase 1: Work with PI Streams
+=== Usecase 1: Work with Streams (Outbound)
 
 This use case demonstrate the way to interact with Streams in the PI Historian server. 
 
+==== Get End Stream Value
+
+      - Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
+      - Follow the steps described in the demo and run the application.
+      - test the application -
+===== Request
+----
+			GET http://localhost:8081/api/stream/end?webId=<webIdValue>
+----
+===== Response
+
+----     
+		 {
+		"Timestamp": "2020-12-18T18:06:13Z",
+		"Value": 1332.3,
+		"UnitsAbbreviation": "",
+		"Good": true,
+		"Questionable": false,
+		"Substituted": false,
+		"Annotated": false
+		}'
+----
+
 ==== Get Stream Value
-* Get Stream Summary
-      * Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
-      * Follow the steps described in the demo and run the application.
-      * 
+
+      - Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
+      - Follow the steps described in the demo and run the application.
+      - test the application -
+===== Request
+----
+			GET http://localhost:8081/api/stream/value?webId=<webIdValue>
+----
+===== Response
+
+----     
+		 {
+		"Timestamp": "2020-12-18T18:06:13Z",
+		"Value": 1332.3,
+		"UnitsAbbreviation": "",
+		"Good": true,
+		"Questionable": false,
+		"Substituted": false,
+		"Annotated": false
+		}'
+----
+
+==== Update Stream Value
+
+      - Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
+      - Follow the steps described in the demo and run the application.
+      - test the application -
+===== Request
+----
+			PUT http://localhost:8081/api/stream/value?webId=<webIdValue>
+			
+			Body:
+			
+			{
+			  "UnitsAbbreviation": "",
+			  "Good": true,
+			  "Questionable": false,
+			  "Value": 1332.3
+			}
+----
+===== Response
+
+----     
+		 	{"status":"Success"}
+----
+
+
+=== Usecase 2: Subscribe a channel (Inbound)
+
+      - Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-subscribe-streams-demo[Pi Historian Subscribe channel demo]
+      - Follow the steps described in the demo and configure the webId -
+      
+      - run the application.
+
+===== Output Log
 
 
 
-
-* link:#use-case-1[Configure Connector to ...]
-* link:#use-case-2[Configure Authentication via ...]
-
-
-[use-case-1]
-=== Configure Connector to ...
-// Limit to 10 steps
-// Do NOT provide a parallel XML walkthrough. Weave any XML details into steps. Also avoid any unnecessary or marginally helpful screenshots
-
-Explain what the use case and provide an example if possible.
-
-The section should contain a fully functional Mule application as a demo, where the use case is considered. Explain how to create this case with Anypoint Studio Visual editor and provide the app.
-
-Download the deployable app archive and import into Anypoint Studio to interact with the example application.
-
-[use-case-2]
-=== Configure Authentication via ...
 
 
 == Connector Performance
@@ -225,4 +281,4 @@ optional
 
 == Resources
 
-* Access the link:/release-notes/<System_Name>-connector-release-notes[<System_Name> Connector Release Notes].
+* Access the link:https://github.com/deepakIW/mule-pi-historian-connector/blob/main/release-notes.adoc[Pi Historian Connector Release Notes].
