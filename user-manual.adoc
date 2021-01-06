@@ -121,7 +121,7 @@ To use the Pi Historian connector in your Mule application, you must configure a
 
 |===
 
-image:pi-historian-global-element-props.png[pi-historian-config]
+image:pi-historian-global-element-props.PNG[pi-historian-config]
 
 [[operations]]
 
