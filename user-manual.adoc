@@ -20,7 +20,7 @@ The Anypoint Connector for PI Historian (PI Historian Connector) enables you to 
 
 //Global rule: the word "connector" should be lower case except when appearing in titles, important URL anchors, and after a MuleSoft tradename such as "Anypoint".
 
-Read through this user guide to understand how to set up and configure a basic flow using the Pi Historian connector. Track feature additions, compatibility, limitations and API version updates with each release of the connector using the link:https://github.com/deepakIW/mule-pi-historian-connector/blob/main/release-notes.adoc[Release Notes]. Review the connector operations and functionality using the link:/link-to-github.io-or-internal-section[Technical Reference] alongside the link:https://www.mulesoft.com/exchange#!/?filters=Salesforce&sortBy=rank[demo applications].
+Read through this user guide to understand how to set up and configure a basic flow using the Pi Historian connector. Track feature additions, compatibility, limitations and API version updates with each release of the connector using the link:https://github.com/IntegrationWorksAus/mule-pi-historian-connector/blob/main/release-notes.adoc[Release Notes]. Review the connector operations and functionality using the link:/link-to-github.io-or-internal-section[Technical Reference] alongside the link:https://www.mulesoft.com/exchange#!/?filters=Salesforce&sortBy=rank[demo applications].
 
 MuleSoft maintains this connector under the link:https://www.mulesoft.com/legal/versioning-back-support-policy#anypoint-connectors[MuleSoft Certified] support policy.
 
@@ -35,7 +35,7 @@ link:https://docs.mulesoft.com/mule-runtime/4.3/intro-studio[Anypoint Studio 7].
 [[requirements]]
 == Hardware and Software Requirements
 
-For hardware and software requirements, please visit the link:https://github.com/deepakIW/mule-pi-historian-connector/blob/main/release-notes.adoc[Release Notes].
+For hardware and software requirements, please visit the link:https://github.com/IntegrationWorksAus/mule-pi-historian-connector/blob/main/release-notes.adoc[Release Notes].
 
 [[install]]
 == How to Install
@@ -170,7 +170,7 @@ This use case demonstrate the way to interact with Streams in the PI Historian s
 
 ==== Get End Stream Value
 
-      - Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
+      - Checkout the following demo - link:https://github.com/IntegrationWorksAus/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
       - Follow the steps described in the demo and run the application.
       - test the application -
       
@@ -196,7 +196,7 @@ This use case demonstrate the way to interact with Streams in the PI Historian s
 
 ==== Get Stream Value
 
-      - Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
+      - Checkout the following demo - link:https://github.com/IntegrationWorksAus/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
       - Follow the steps described in the demo and run the application.
       - test the application -
 
@@ -224,7 +224,7 @@ This use case demonstrate the way to interact with Streams in the PI Historian s
 
 ==== Update Stream Value
 
-      - Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
+      - Checkout the following demo - link:https://github.com/IntegrationWorksAus/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo[Pi Historian Stream Demo]
       - Follow the steps described in the demo and run the application.
       - test the application -
 
@@ -252,7 +252,7 @@ This use case demonstrate the way to interact with Streams in the PI Historian s
 
 === Usecase 2: Subscribe a channel (Inbound)
 
-      - Checkout the following demo - link:https://github.com/deepakIW/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-subscribe-streams-demo[Pi Historian Subscribe channel demo]
+      - Checkout the following demo - link:https://github.com/IntegrationWorksAus/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-subscribe-streams-demo[Pi Historian Subscribe channel demo]
       - Follow the steps described in the demo and configure the webId -
       
       - run the application.
@@ -292,4 +292,4 @@ optional
 
 == Resources
 
-* Access the link:https://github.com/deepakIW/mule-pi-historian-connector/blob/main/release-notes.adoc[Pi Historian Connector Release Notes].
+* Access the link:https://github.com/IntegrationWorksAus/mule-pi-historian-connector/blob/main/release-notes.adoc[Pi Historian Connector Release Notes].
