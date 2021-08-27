@@ -161,6 +161,6 @@ The Mule Pi Historian Connector can be deployed to an Exchange with following st
 * [Streams Demo Application](https://github.com/IntegrationWorksAus/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-stream-operations-demo)
 * [Subscribe Stream Demo Application](https://github.com/IntegrationWorksAus/mule-pi-historian-connector/tree/main/demos/mule-pi-historian-connector-subscribe-streams-demo)
 
-To use the connecter see reference: [PI Historian Connector Reference](http://example.com/)
+To use the connecter see reference: [PI Historian Connector Reference](https://github.com/IntegrationWorksAus/mule-pi-historian-connector)
 
 For more information see: [PI Web API Reference](https://techsupport.osisoft.com/Documentation/PI-Web-API/help.html)
